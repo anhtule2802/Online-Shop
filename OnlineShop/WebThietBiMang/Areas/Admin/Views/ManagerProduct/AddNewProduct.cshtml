@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Thêm Mới Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var ListDanhMuc = (List<DAL.EF.DANHMUC>)ViewBag.ListDanhMuc;
+}
+
+<h2>Thêm Mới Sản Phẩm</h2>
+<div class="section group">
+    <div class="col-md-6">
+        @using (Html.BeginForm("AddNewProduct", "ManagerProduct", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label>Tên Sản Phẩm</label>
+                <input name="NamePd" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Danh Mục</label>
+                <select class="form-group" name="danhmuc">
+                    @foreach (var item in ListDanhMuc)
+                    {
+                        <option value="@item.Name">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Image Name</label>
+                <input name="ImageName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Meta Title</label>
+                <input name="MetaTitle" class="form-control" />
+            </div>
+            <div>
+                <div class="form-group">
+                    <button type="submit" class="btn-dark btn">Thêm mới</button>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+

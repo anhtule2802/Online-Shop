@@ -1,0 +1,75 @@
+﻿@model List<WebThietBiMang.Models.CartItem>
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@if (Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Mã Sản Phẩm</td>
+                <td>Tên Sản Phẩm</td>
+                <td>Ảnh Sản Phẩm</td>
+                <td>Số Lượng</td>
+                <td></td>
+                <td>Đơn Giá</td>
+                <td>Thành Tiền</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Id</td>
+                    <td>@item.Product.Name</td>
+                    <td><img src="~/Images/@item.Product.ImageName" style="height:100px;width:100px;" /></td>
+                    <td><a href="/update-gio-hang?productID=@item.Product.Id&quantity=@item.Quantity"><button class="btn btn-light dropdown-toggle" data-toggle="modal" data-target="#myModal">@item.Quantity</button></a>
+                    </td>
+                    <td><a href="/gio-hang-xoa?productId=@item.Product.Id">Xóa</a></td>
+                    <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                    <td>@((@item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td><button class="btn-dark btn"><a href="/" style="color:white;">Tiếp tục mua hàng</a></button></td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td>
+                @{ 
+                    var session = (WebThietBiMang.Common.UserLogin)Session[WebThietBiMang.Common.CommonConstants.USER_SESSION];
+                }
+                @if (session == null)
+                {
+                    <button class="btn-light btn"><a href="/dang-nhap" style="color:black;">Thanh Toán</a></button>
+                }
+                else
+                {
+                    <button class="btn-light btn"><a href="/thanh-toan" style="color:black;">Thanh Toán</a></button>
+                }            
+            </td>
+        </tr>
+    </table>
+                    }
+                    else
+                    {
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Mã Sản Phẩm</td>
+                <td>Tên Sản Phẩm</td>
+                <td>Ảnh Sản Phẩm</td>
+                <td>Số Lượng</td>
+                <td>Đơn Giá</td>
+                <td>Thành Tiền</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th><span>Chưa có sản phẩm nào trong giỏ hàng</span></th>
+            </tr>
+            <tr><td><button class="btn-dark btn"><a href="/" style="color:white;">Tiếp tục mua hàng</a></button></td></tr>
+        </tbody>
+    </table>
+}

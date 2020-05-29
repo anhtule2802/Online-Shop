@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<DAL.EF.SANPHAM>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Quản Lý Sản Phẩm</h2>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>Tên Danh Mục</td>
+                    <td>Tên Sản Phẩm</td>
+                    <td>Giá</td>
+                    <td>Hình Ảnh</td>
+                    <td>Ngày Tạo</td>
+                    <td>Edit</td>
+                    <td>Xóa</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>@item.CategoryName</td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td><img src="~/Images/@item.ImageName" style="width:50px;height:50px;" /></td>
+                        <td>@item.CreateDays</td>
+                        <td><a href="/Admin/ManagerProduct/EditProduct?productID=@item.Id">Edit</a></td>
+                        <td><a href="/xoa-san-pham?productID=@item.Id">Xóa</a></td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button class="btn-dark btn"><a href="/Admin/ManagerProduct/AddNewProduct" style="color:white;">Thêm Sản Phẩm Mới</a></button></td>
+                    <td></td><td></td><td></td><td></td><td></td>
+                    <td>
+                        <div class="col-md-12" style="text-align:center">
+                            <b style="font-size:20px">@Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "btn btn-dark" }))</b>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+

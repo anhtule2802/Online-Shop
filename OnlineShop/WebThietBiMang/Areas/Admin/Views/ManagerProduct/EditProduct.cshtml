@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Edit Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var ListProductById = (DAL.EF.SANPHAM)ViewBag.ListProduct;
+    var ListDanhMuc = (List<DAL.EF.DANHMUC>)ViewBag.ListDanhMuc;
+}
+
+<h2>Cập Nhật Sản Phẩm</h2>
+<div class="section group">
+    <div class="col-md-6">
+        @using (Html.BeginForm("EditProduct", "ManagerProduct", FormMethod.Post))
+        {
+            <input name="Id" value="@ListProductById.Id" type="hidden"/>
+            <div class="form-group">
+                <label>Tên Sản Phẩm</label>
+                <input name="NamePd" class="form-control" value="@ListProductById.Name"/>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" class="form-control" value="@ListProductById.Description"/>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" value="@ListProductById.Price"/>
+            </div>
+            <div class="form-group">
+                <label>Danh Mục</label>
+                <select class="form-group" name="danhmuc">
+                    @foreach (var item in ListDanhMuc)
+                    {
+                        if(item.Name==ListProductById.CategoryName)
+                        {
+                            <option value="@ListProductById.CategoryName" selected>@ListProductById.CategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Image Name</label>
+                <input name="ImageName" class="form-control" value="@ListProductById.ImageName"/>
+            </div>
+            <div class="form-group">
+                <label>Meta Title</label>
+                <input name="MetaTitle" class="form-control" value="@ListProductById.MetaTitle"/>
+            </div>
+            <div>
+                <div class="form-group">
+                    <button type="submit" class="btn-dark btn">Cập Nhật Sản Phẩm</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

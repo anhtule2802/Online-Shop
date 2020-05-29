@@ -1,0 +1,53 @@
+﻿@model DAL.EF.SANPHAM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var category = (DAL.EF.DANHMUC)ViewBag.Category;
+    var listProductID = (List<DAL.EF.SANPHAM>)ViewBag.ProductsID;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="black-links">
+                <p><a href="/" style="color:black;font-size:24px;">Trang chủ</a> > <a href="/san-pham/@category.Meta_Title-@category.CategoryID" style="color:black;font-size:18px;">@category.Name</a></p>
+            </div>
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="~/Images/@Model.ImageName" alt="" style="height:500px;width:950px;">
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Name</h3>
+                    <h4>@Model.Price VND</h4>
+                    <p class="card-text">@Model.Description</p>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                    4.0 stars
+                    <div><a href="/gio-hang?productId=@Model.Id&quantity=1") style="font-size:24px;color:black;">Thêm giỏ hàng</a></div>
+                </div>
+            </div>
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Sản Phẩm Liên Quan
+                </div>
+                <div class="row">
+                    @foreach (var item in listProductID)
+                    {
+                        var url = "/chi-tiet/" + item.MetaTitle + "-" + item.Id;
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="@url"><img class="card-img-top" src="~/Images/@item.ImageName" alt="" style="height:200px;width:320px;"></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="@url" style="color:black;">@item.Name</a>
+                                    </h4>
+                                    <h5>@item.Price VND</h5>
+                                    <p class="card-text">@item.Description</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                    <h5><a href="@url" style="color:black;">Chi Tiết Sản Phẩm</a></h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
